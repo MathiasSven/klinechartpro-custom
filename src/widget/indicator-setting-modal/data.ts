@@ -13,6 +13,12 @@
  */
 
 export default {
+  WARS: [],
+  TOTAL: [],
+  RAD: [
+    { paramNameKey: 'continents', default: "na,sa,eu,af,as,au" },
+  ],
+
   AO: [
     { paramNameKey: 'params_1', precision: 0, min: 1, default: 5 },
     { paramNameKey: 'params_2', precision: 0, min: 1, default: 34 }

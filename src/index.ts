@@ -12,9 +12,9 @@
  * limitations under the License.
  */
 
-import { registerOverlay } from 'klinecharts'
+import klinecharts, { registerOverlay, registerIndicator, Overlay, LineType, OverlayTemplate, utils, OverlayMode } from 'klinecharts'
 
-import overlays from './extension'
+import { overlays, pnwIndicators } from './extension'
 
 import DefaultDatafeed from './DefaultDatafeed'
 import KLineChartPro from './KLineChartPro'
@@ -26,6 +26,7 @@ import { Datafeed, SymbolInfo, Period, DatafeedSubscribeCallback, ChartProOption
 import './index.less'
 
 overlays.forEach(o => { registerOverlay(o) })
+pnwIndicators.forEach(o => { registerIndicator(o) })
 
 export {
   DefaultDatafeed,

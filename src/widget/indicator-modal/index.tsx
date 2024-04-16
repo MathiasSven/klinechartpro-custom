@@ -44,6 +44,45 @@ const IndicatorModal: Component<IndicatorModalProps> = props => {
       onClose={props.onClose}>
       <List
         class="klinecharts-pro-indicator-modal-list">
+        <li class="title">PnW Indicator</li>
+        {
+          [
+            (() => {
+            const name = "WARS"
+            const checked = props.mainIndicators.includes(name)
+            return <li
+              class="row"
+              onClick={_ => {
+                props.onMainIndicatorChange({ name, paneId: 'candle_pane', added: !checked })
+              }}>
+              <Checkbox checked={checked} label="Wars"/>
+            </li>})(),
+
+            (() => {
+            const name = "TOTAL"
+            const checked = name in props.subIndicators
+            return <li
+              class="row"
+              onClick={_ => {
+                // @ts-ignore
+                props.onSubIndicatorChange({ name, paneId: props.subIndicators[name] ?? '', added: !checked })
+              }}>
+              <Checkbox checked={checked} label="World Total"/>
+            </li>})(),
+
+            (() => {
+            const name = "RAD"
+            const checked = name in props.subIndicators
+            return <li
+              class="row"
+              onClick={_ => {
+                // @ts-ignore
+                props.onSubIndicatorChange({ name, paneId: props.subIndicators[name] ?? '', added: !checked })
+              }}>
+              <Checkbox checked={checked} label="Radiation"/>
+            </li>})(),
+          ]
+        }
         <li class="title">{i18n('main_indicator', props.locale)}</li>
         {
           [

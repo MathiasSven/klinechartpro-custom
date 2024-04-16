@@ -53,7 +53,7 @@ const Input: Component<InputProps> = p => {
         onChange={(e) => {
           // @ts-expect-error
           const v = e.target.value
-          if ('precision' in props) {
+          if (props.precision !== undefined) {
             let reg
             const decimalDigit = Math.max(0, Math.floor(props.precision!))
             if (decimalDigit <= 0) {

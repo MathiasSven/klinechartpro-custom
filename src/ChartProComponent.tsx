@@ -32,6 +32,7 @@ import {
 import { translateTimezone } from './widget/timezone-modal/data'
 
 import { SymbolInfo, Period, ChartProOptions, ChartPro } from './types'
+import wars from './extension/pnw/wars'
 
 export interface ChartProComponentProps extends Required<Omit<ChartProOptions, 'container'>> {
   ref: (chart: ChartPro) => void
@@ -454,13 +455,22 @@ const ChartProComponent: Component<ChartProComponentProps> = props => {
           mainIndicators={mainIndicators()}
           subIndicators={subIndicators()}
           onClose={() => { setIndicatorModalVisible(false) }}
-          onMainIndicatorChange={data => {
+          onMainIndicatorChange={async data => {
             const newMainIndicators = [...mainIndicators()]
             if (data.added) {
-              createIndicator(widget, data.name, true, { id: 'candle_pane' })
+              if (['WARS'].includes(data.name)) {
+                const json = await fetch('/conflicts').then(res => res.json())
+                widget?.createOverlay({ 
+                  name: 'wars',
+                  points: json.flatMap((c: any) => [{ timestamp: c.start, value: 0 }, { timestamp: c.end, value: 0 }]),
+                  extendData: { data: json, hoverData: { active: false, lineX: 0 } }
+              }, 'candle_pane')
+              } else { createIndicator(widget, data.name, true, { id: 'candle_pane' }) };
               newMainIndicators.push(data.name)
             } else {
-              widget?.removeIndicator('candle_pane', data.name)
+              if (['WARS'].includes(data.name)) {
+                widget?.removeOverlay({ name: 'wars' })
+              } else { widget?.removeIndicator('candle_pane', data.name) };
               newMainIndicators.splice(newMainIndicators.indexOf(data.name), 1)
             }
             setMainIndicators(newMainIndicators)

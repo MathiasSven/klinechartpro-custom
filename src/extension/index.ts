@@ -16,13 +16,19 @@ import eightWaves from './eightWaves'
 import anyWaves from './anyWaves'
 import abcd from './abcd'
 import xabcd from './xabcd'
+import { IndicatorTemplate } from 'klinecharts'
+import radiation from './pnw/radiation'
+import total from './pnw/total'
+import wars from './pnw/wars'
 
-const overlays = [
-  arrow,
+export const overlays = [
+  arrow, wars,
   circle, rect, triangle, parallelogram,
   fibonacciCircle, fibonacciSegment, fibonacciSpiral,
   fibonacciSpeedResistanceFan, fibonacciExtension, gannBox,
   threeWaves, fiveWaves, eightWaves, anyWaves, abcd, xabcd
 ]
 
-export default overlays
+export const pnwIndicators: IndicatorTemplate[] = [
+  radiation, total
+];
